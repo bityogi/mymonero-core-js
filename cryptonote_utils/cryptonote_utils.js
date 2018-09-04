@@ -94,6 +94,7 @@ var cnUtil = function(currencyConfig)
 	this.moduleReadyFns = [] // initial (gets set to undefined once Module ready)
 	this.OnceModuleReady = function(fn)
 	{
+		console.log('starting OnceModuleReady....')
 		if (this._CNCrypto == null) {
 			if (typeof this.moduleReadyFns == 'undefined' || !this.moduleReadyFns) {
 				throw "Expected moduleReadyFns"

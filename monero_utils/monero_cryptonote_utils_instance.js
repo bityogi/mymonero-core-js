@@ -35,20 +35,20 @@ var isElectronRenderer = (ENVIRONMENT_IS_NODE&&ENVIRONMENT_IS_WEB)/*this may bec
 	|| (typeof window !== 'undefined' && window.IsElectronRendererProcess == true);
 //
 var monero_cryptonote_utils_instance = null;
-if (isElectronRenderer) {
-	// Require file again except on the main process ...
-	// this avoids a host of issues running wasm on the renderer side, 
-	// for right now until we can load such files raw w/o unsafe-eval
-	// script-src CSP. makes calls synchronous. if that is a perf problem 
-	// we can make API async.
-	// 
-	// Resolves relative to the entrypoint of the main process.
-	monero_cryptonote_utils_instance = require('electron').remote.require("../mymonero_core_js/monero_utils/_monero_utils_i_nonthrowing")
-} else {
-	const monero_config = require("./monero_config");
-	const cryptonote_utils = require("../cryptonote_utils/cryptonote_utils").cnUtil;
-	monero_cryptonote_utils_instance = cryptonote_utils(monero_config);
-}
+// if (isElectronRenderer) {
+// 	// Require file again except on the main process ...
+// 	// this avoids a host of issues running wasm on the renderer side, 
+// 	// for right now until we can load such files raw w/o unsafe-eval
+// 	// script-src CSP. makes calls synchronous. if that is a perf problem 
+// 	// we can make API async.
+// 	// 
+// 	// Resolves relative to the entrypoint of the main process.
+// 	monero_cryptonote_utils_instance = require('electron').remote.require("../mymonero_core_js/monero_utils/_monero_utils_i_nonthrowing")
+// } else {
+const monero_config = require("./monero_config");
+const cryptonote_utils = require("../cryptonote_utils/cryptonote_utils").cnUtil;
+monero_cryptonote_utils_instance = cryptonote_utils(monero_config);
+// }
 if (monero_cryptonote_utils_instance == null) {
 	throw "Unable to make monero_cryptonote_utils_instance"
 }
